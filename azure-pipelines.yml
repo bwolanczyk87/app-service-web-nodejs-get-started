@@ -21,6 +21,40 @@ variables:
   vmImageName: 'ubuntu-latest'
 
 stages:
+- stage: Create
+  displayName: Create resources
+  jobs:
+  - job: Validate
+    displayName: Validate templates
+    steps:
+    - task: AzureResourceManagerTemplateDeployment@3
+      inputs:
+        deploymentScope: 'Resource Group'
+        azureResourceManagerConnection: 'Visual Studio Professional Subscription (70f59e87-157b-4a3f-96e8-bae1144aa0b3)'
+        subscriptionId: '70f59e87-157b-4a3f-96e8-bae1144aa0b3'
+        action: 'Create Or Update Resource Group'
+        resourceGroupName: 'myapp'
+        location: 'Central US'
+        templateLocation: 'Linked artifact'
+        csmFile: 'ArmTemplate/webAppService.json'
+        deploymentMode: 'Validation'
+  - job: Create
+    displayName: Create web app service
+    steps:
+    - task: AzureResourceManagerTemplateDeployment@3
+      inputs:
+        deploymentScope: 'Resource Group'
+        azureResourceManagerConnection: 'Visual Studio Professional Subscription (70f59e87-157b-4a3f-96e8-bae1144aa0b3)'
+        subscriptionId: '70f59e87-157b-4a3f-96e8-bae1144aa0b3'
+        action: 'Create Or Update Resource Group'
+        resourceGroupName: 'myapp'
+        location: 'Central US'
+        templateLocation: 'Linked artifact'
+        csmFile: 'ArmTemplates/webAppService.json'
+        deploymentMode: 'Incremental'
+        deploymentName: 'Create web app service'
+        deploymentOutputs: 'webAppName'
+
 - stage: Build
   displayName: Build stage
   jobs:  
