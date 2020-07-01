@@ -6,11 +6,7 @@
 trigger:
 - master
 
-variables:
-
-  # Azure Resource Manager connection created during pipeline creation
-  azureSubscription: '70f59e87-157b-4a3f-96e8-bae1144aa0b3'
-  
+variables:  
   # Environment name
   environmentTestName: 'QAEnv'
   environmentDevName: 'DevEnv'
@@ -29,7 +25,7 @@ stages:
         inputs:
           deploymentScope: 'Resource Group'
           azureResourceManagerConnection: 'ArmTemplatesServiceConnection'
-          subscriptionId: $(azureSubscription)
+          subscriptionId: '70f59e87-157b-4a3f-96e8-bae1144aa0b3'
           action: 'Create Or Update Resource Group'
           resourceGroupName: 'myapp'
           location: 'Central US'
@@ -90,7 +86,7 @@ stages:
             inputs:
               deploymentScope: 'Resource Group'
               azureResourceManagerConnection: 'ArmTemplatesServiceConnection'
-              subscriptionId: $(azureSubscription)
+              subscriptionId: '70f59e87-157b-4a3f-96e8-bae1144aa0b3'
               action: 'Create Or Update Resource Group'
               resourceGroupName: 'myapp'
               location: 'Central US'
