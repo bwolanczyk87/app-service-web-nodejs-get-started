@@ -52,7 +52,7 @@ stages:
         resourceGroupName: 'myapp'
         location: 'Central US'
         templateLocation: 'Linked artifact'
-        csmFile: 'ArmTemplate/webAppService.json'
+        csmFile: '$(System.DefaultWorkingDirectory)/ArmTemplate/webAppService.json'
         deploymentMode: 'Incremental'
     - pwsh: $(System.DefaultWorkingDirectory)/ParseArmDeploymentOutput.ps1 -ArmOutputString           
 
