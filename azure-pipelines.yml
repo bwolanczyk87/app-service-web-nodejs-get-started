@@ -9,26 +9,43 @@ trigger:
 variables:
 
   # Azure Resource Manager connection created during pipeline creation
-  azureSubscription: '587d151c-fa6f-4bed-a2ab-88a00d34b590'
-  
-  # Web app name
-  webAppName: 'myapp'
+  azureSubscription: '70f59e87-157b-4a3f-96e8-bae1144aa0b3'
   
   # Environment name
-  environmentName: 'myenv'
+  environmentTestName: 'QAEnv'
+  environmentDevName: 'DevEnv'
 
   # Agent VM image name
   vmImageName: 'ubuntu-latest'
 
 stages:
+- stage: Validation
+  displayName: Validation sources stage
+  jobs:
+  - job: TempaltesValidation
+    steps:
+      - task: AzureResourceManagerTemplateDeployment@3
+        displayName: 'Validate webAppService template'
+        inputs:
+          deploymentScope: 'Resource Group'
+          azureResourceManagerConnection: 'Visual Studio Professional Subscription (70f59e87-157b-4a3f-96e8-bae1144aa0b3)'
+          subscriptionId: '70f59e87-157b-4a3f-96e8-bae1144aa0b3'
+          action: 'Create Or Update Resource Group'
+          resourceGroupName: 'myapp'
+          location: 'Central US'
+          templateLocation: 'Linked artifact'
+          csmFile: 'ArmTemplate/webAppService.json'
+          deploymentMode: 'Validation'        
+
 - stage: Build
   displayName: Build stage
+  dependsOn: 'Deployment'
   jobs:  
   - job: Build
     displayName: Build
     pool:
       vmImage: $(vmImageName)
-      
+     
     steps:
     - task: NodeTool@0
       inputs:
@@ -50,7 +67,7 @@ stages:
         archiveFile: $(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip
         replaceExistingArchive: true
 
-    - upload: $(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip
+    - publish: $(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip
       artifact: drop
 
 - stage: Deploy
@@ -60,13 +77,27 @@ stages:
   jobs:
   - deployment: Deploy
     displayName: Deploy
-    environment: $(environmentName)
+    environment: $(environmentDevName)
     pool: 
       vmImage: $(vmImageName)
     strategy:
       runOnce:
         deploy:
-          steps:            
+          steps:  
+          - task: AzureResourceManagerTemplateDeployment@3
+            displayName: 'Create webAppService from template'
+            condition: succeeded('Validation')
+            inputs:
+              deploymentScope: 'Resource Group'
+              azureResourceManagerConnection: 'Visual Studio Professional Subscription (70f59e87-157b-4a3f-96e8-bae1144aa0b3)'
+              subscriptionId: '70f59e87-157b-4a3f-96e8-bae1144aa0b3'
+              action: 'Create Or Update Resource Group'
+              resourceGroupName: 'myapp'
+              location: 'Central US'
+              templateLocation: 'Linked artifact'
+              csmFile: 'ArmTemplate/webAppService.json'
+              deploymentMode: 'Incremental'
+          - pwsh: $(System.DefaultWorkingDirectory)/ParseArmDeploymentOutput.ps1 -ArmOutputString '$(webAppNameOutput)' -MakeOutput -ErrorAction Stop          
           - task: AzureWebApp@1
             displayName: 'Azure Web App Deploy: '
             inputs:
