@@ -30,7 +30,7 @@ stages:
         inputs:
           deploymentScope: 'Resource Group'
           azureResourceManagerConnection: 'Visual Studio Professional Subscription (70f59e87-157b-4a3f-96e8-bae1144aa0b3)'
-          subscriptionId: '70f59e87-157b-4a3f-96e8-bae1144aa0b3'
+          subscriptionId: $(azureSubscription)
           action: 'Create Or Update Resource Group'
           resourceGroupName: 'myapp'
           location: 'Central US'
@@ -91,7 +91,7 @@ stages:
             inputs:
               deploymentScope: 'Resource Group'
               azureResourceManagerConnection: 'Visual Studio Professional Subscription (70f59e87-157b-4a3f-96e8-bae1144aa0b3)'
-              subscriptionId: '70f59e87-157b-4a3f-96e8-bae1144aa0b3'
+              subscriptionId: $(azureSubscription)
               action: 'Create Or Update Resource Group'
               resourceGroupName: 'myapp'
               location: 'Central US'
