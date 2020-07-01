@@ -35,12 +35,12 @@ stages:
 
 - stage: Create
   displayName: Create resources
+  dependsOn: 'Validation'
+  condition: 'succeeded()'
   pool:
     vmImage: $(vmImageName)
   jobs:
   - job: Create
-    dependsOn: 'Validation'
-    condition: 'succeeded()'
     steps:
     - task: AzureResourceManagerTemplateDeployment@3
       displayName: 'Create webAppService from template'
