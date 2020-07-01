@@ -40,7 +40,7 @@ stages:
 
 - stage: Build
   displayName: Build stage
-  dependsOn: 'Deployment'
+  dependsOn: 'Validation'
   jobs:  
   - job: Build
     displayName: Build
