@@ -10,7 +10,6 @@ variables:
 
   # Azure Resource Manager connection created during pipeline creation
   azureSubscription: '70f59e87-157b-4a3f-96e8-bae1144aa0b3'
-  armTemplateServiceConnection: 'ArmTemplatesServiceConnection'
   
   # Environment name
   environmentTestName: 'QAEnv'
@@ -29,7 +28,7 @@ stages:
         displayName: 'Validate webAppService template'
         inputs:
           deploymentScope: 'Resource Group'
-          azureResourceManagerConnection: $armTemplateServiceConnection
+          azureResourceManagerConnection: 'ArmTemplatesServiceConnection'
           subscriptionId: $(azureSubscription)
           action: 'Create Or Update Resource Group'
           resourceGroupName: 'myapp'
@@ -90,7 +89,7 @@ stages:
             condition: succeeded('Validation')
             inputs:
               deploymentScope: 'Resource Group'
-              azureResourceManagerConnection: $armTemplateServiceConnection
+              azureResourceManagerConnection: 'ArmTemplatesServiceConnection'
               subscriptionId: $(azureSubscription)
               action: 'Create Or Update Resource Group'
               resourceGroupName: 'myapp'
