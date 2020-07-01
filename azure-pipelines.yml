@@ -12,7 +12,7 @@ variables:
   azureSubscription: '70f59e87-157b-4a3f-96e8-bae1144aa0b3'
   
   # Environment name
-  
+
   environmentTestName: 'QAEnv'
   environmentDevName: 'DevEnv'
 
