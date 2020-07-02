@@ -107,15 +107,16 @@ stages:
             inputs:
               filePath: '$(Pipeline.Workspace)/parse/ParseArmDeploymentOutput.ps1'
               arguments: '-armOutputString ''$(webAppNameOutput)'''  
-          - bash: echo $(webAppName)                
-          - task: AzureWebApp@1
-            displayName: 'Azure Web App Deploy: '
+          - bash: echo $(webAppName)               
+              
+          - task: AzureRmWebAppDeployment@4
             inputs:
+              ConnectionType: 'AzureRM'
               azureSubscription: 'Visual Studio Professional Subscription (70f59e87-157b-4a3f-96e8-bae1144aa0b3)'
-              appType: webAppLinux
-              appName: $(webAppName)
-              runtimeStack: 'NODE|10.10'
-              package: $(Pipeline.Workspace)/drop/$(Build.BuildId).zip
-              startUpCommand: 'npm run start'    
+              appType: 'webAppLinux'
+              WebAppName: $(webAppName)
+              packageForLinux: '$(Pipeline.Workspace)/drop/$(Build.BuildId).zip'
+              RuntimeStack: 'NODE|10.10'
+              StartupCommand: 'npm run start'
 
 
