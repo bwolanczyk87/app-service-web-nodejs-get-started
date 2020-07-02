@@ -35,7 +35,7 @@ stages:
         templateLocation: 'URL of the file'
         csmFileLink: 'https://raw.githubusercontent.com/bwolanczyk87/app-service-web-nodejs-get-started/master/ArmTemplates/webAppService.json'
         deploymentMode: 'Incremental'
-        deploymentName: 'Web app deployment'
+        deploymentName: 'Web_app_deployment'
         deploymentOutputs: 'webAppNameOutput'
     - pwsh: $(System.DefaultWorkingDirectory)/ParseArmDeploymentOutput.ps1 -ArmOutputString $(webAppNameOutput) -MakeOutput -ErrorAction Stop 
 
