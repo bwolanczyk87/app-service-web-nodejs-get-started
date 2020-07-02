@@ -1,37 +1,25 @@
-[CmdletBinding()]
 param (
-    [Parameter(Mandatory)]
-    [ValidateNotNullOrEmpty()]
-    [string]$ArmOutputString,
-
-    [Parameter()]
-    [ValidateNotNullOrEmpty()]
-    [switch]$MakeOutput
+    [Parameter(Mandatory=$true)]
+    [string]
+    $armOutputString
 )
 
-Write-Output "Retrieved input: $ArmOutputString"
-$armOutputObj = $ArmOutputString | ConvertFrom-Json
+Write-Host $armOutputString
+$armOutputObj = $armOutputString | convertfrom-json
+Write-Host $armOutputObj
 
 $armOutputObj.PSObject.Properties | ForEach-Object {
     $type = ($_.value.type).ToLower()
-    $keyname = $_.Name
-    $vsoAttribs = @("task.setvariable variable=$keyName")
+    $key = $_.name
+    $value = $_.value.value
 
-    if ($type -eq "array") {
-        $value = $_.Value.value.name -join ',' ## All array variables will come out as comma-separated strings
-    } elseif ($type -eq "securestring") {
-        $vsoAttribs += 'isSecret=true'
-    } elseif ($type -ne "string") {
-        throw "Type '$type' is not supported for '$keyname'"
+    if ($type -eq "securestring") {
+        Write-Host "##vso[task.setvariable variable=$key;issecret=true]$value"
+        Write-Host "Create VSTS variable with key '$key' and value '$value' of type '$type'!"
+    } elseif ($type -eq "string") {
+        Write-Host "##vso[task.setvariable variable=$key]$value"
+        Write-Host "Create VSTS variable with key '$key' and value '$value' of type '$type'!"
     } else {
-        $value = $_.Value.value
+        Throw "Type '$type' not supported!"
     }
-        
-    if ($MakeOutput.IsPresent) {
-        $vsoAttribs += 'isOutput=true'
-    }
-
-    $attribString = $vsoAttribs -join ';'
-    $var = "##vso[$attribString]$value"
-    Write-Output -InputObject $var
 }
