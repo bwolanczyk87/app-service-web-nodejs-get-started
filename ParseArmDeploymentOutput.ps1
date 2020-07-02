@@ -14,10 +14,10 @@ $armOutputObj.PSObject.Properties | ForEach-Object {
     $value = $_.value.value
 
     if ($type -eq "securestring") {
-        Write-Host "##vso[task.setvariable variable=$key;issecret=true]$value"
+        Write-Host "##vso[task.setvariable variable=$key;isOutput=true;issecret=true]$value"
         Write-Host "Create VSTS variable with key '$key' and value '$value' of type '$type'!"
     } elseif ($type -eq "string") {
-        Write-Host "##vso[task.setvariable variable=$key]$value"
+        Write-Host "##vso[task.setvariable variable=$key;isOutput=true]$value"
         Write-Host "Create VSTS variable with key '$key' and value '$value' of type '$type'!"
     } else {
         Throw "Type '$type' not supported!"

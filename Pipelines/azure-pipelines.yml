@@ -31,40 +31,14 @@ stages:
           location: 'Central US'
           templateLocation: 'Linked artifact'
           csmFile: '$(System.DefaultWorkingDirectory)/ArmTemplates/webAppService.json'
-          deploymentMode: 'Validation'   
-
-- stage: Create
-  displayName: Create resources
-  dependsOn: 'Validation'
-  condition: 'succeeded()'
-  pool:
-    vmImage: $(vmImageName)
-  jobs:
-  - job: Create
-    steps:
-    - task: AzureResourceManagerTemplateDeployment@3
-      displayName: 'Create webAppService from template'
-      inputs:
-        deploymentScope: 'Resource Group'
-        azureResourceManagerConnection: 'Visual Studio Professional Subscription (70f59e87-157b-4a3f-96e8-bae1144aa0b3)'
-        subscriptionId: '70f59e87-157b-4a3f-96e8-bae1144aa0b3'
-        action: 'Create Or Update Resource Group'
-        resourceGroupName: 'myapp'
-        location: 'Central US'
-        templateLocation: URL of the file
-        csmFileLink: 'https://raw.githubusercontent.com/bwolanczyk87/app-service-web-nodejs-get-started/master/ArmTemplates/webAppService.json'
-        deploymentMode: 'Incremental'
-        deploymentOutputs: webAppNameOutput
-    - task: PowerShell@2
-      inputs:
-        filePath: '$(System.DefaultWorkingDirectory)/ParseArmDeploymentOutput.ps1'
-        arguments: '-armOutputString ''$(webAppNameOutput)'''  
-    - bash: echo $(webAppName)  
+          deploymentMode: 'Validation'    
 
 - stage: Build
   displayName: Build stage
   jobs:  
   - job: Build
+    dependsOn: 'Validate'
+    condition: succeeded()
     displayName: Build
     pool:
       vmImage: $(vmImageName)
@@ -106,13 +80,30 @@ stages:
     strategy:
       runOnce:
         deploy:
-          steps:           
+          steps:  
+          - task: AzureResourceManagerTemplateDeployment@3
+            displayName: 'Create webAppService from template'
+            inputs:
+              deploymentScope: 'Resource Group'
+              azureResourceManagerConnection: 'Visual Studio Professional Subscription (70f59e87-157b-4a3f-96e8-bae1144aa0b3)'
+              subscriptionId: '70f59e87-157b-4a3f-96e8-bae1144aa0b3'
+              action: 'Create Or Update Resource Group'
+              resourceGroupName: 'myapp'
+              location: 'Central US'
+              templateLocation: URL of the file
+              csmFileLink: 'https://raw.githubusercontent.com/bwolanczyk87/app-service-web-nodejs-get-started/master/ArmTemplates/webAppService.json'
+              deploymentMode: 'Incremental'
+              deploymentOutputs: webAppNameOutput
+          - task: PowerShell@2
+            inputs:
+              filePath: '$(System.DefaultWorkingDirectory)/ParseArmDeploymentOutput.ps1'
+              arguments: '-armOutputString ''$(webAppNameOutput)'''                
           - task: AzureWebApp@1
             displayName: 'Azure Web App Deploy: '
             inputs:
               azureSubscription: 'Visual Studio Professional Subscription (70f59e87-157b-4a3f-96e8-bae1144aa0b3)'
               appType: webAppLinux
-              appName: $env:webAppName
+              appName: $(webAppName)
               runtimeStack: 'NODE|10.10'
               package: $(Pipeline.Workspace)/drop/$(Build.BuildId).zip
               startUpCommand: 'npm run start'    
