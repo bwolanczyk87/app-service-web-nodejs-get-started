@@ -36,7 +36,7 @@
             "sku": {
                 "name": "[variables('appServicePlanSku')]"
             },
-            "kind": "app",
+            "kind": "webAppLinux",
             "properties": {
                 "reserved": true
             }
@@ -46,7 +46,7 @@
             "apiVersion": "2019-08-01",
             "name": "[parameters('appName')]",
             "location": "[parameters('location')]",
-            "kind": "app",
+            "kind": "webAppLinux",
             "dependsOn": [
                 "[resourceId('Microsoft.Web/serverFarms', parameters('appServicePlanName'))]"
             ],
