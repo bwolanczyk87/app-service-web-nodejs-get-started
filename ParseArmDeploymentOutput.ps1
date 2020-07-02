@@ -14,6 +14,7 @@ $armOutputObj = $ArmOutputString | ConvertFrom-Json
 
 $armOutputObj.PSObject.Properties | ForEach-Object {
     $type = ($_.value.type).ToLower()
+    Write-Output $type
     $keyname = $_.Name
     $vsoAttribs = @("task.setvariable variable=$keyName")
 
