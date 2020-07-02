@@ -37,4 +37,5 @@ stages:
         deploymentName: 'Web_app_deployment'
         deploymentOutputs: 'webAppNameOutput'
     - pwsh: $(System.DefaultWorkingDirectory)/ParseArmDeploymentOutput.ps1 -ArmOutputString '$(webAppNameOutput)' -MakeOutput 
+    - pwsh: echo $(webAppName)
 
