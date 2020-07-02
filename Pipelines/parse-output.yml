@@ -17,8 +17,6 @@ variables:
 stages:
 - stage: Create
   displayName: Create resources
-  dependsOn: 'Validation'
-  condition: 'succeeded()'
   pool:
     vmImage: $(vmImageName)
   jobs:
