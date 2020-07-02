@@ -24,7 +24,7 @@ stages:
         displayName: 'Validate webAppService template'
         inputs:
           deploymentScope: 'Resource Group'
-          azureResourceManagerConnection: 'ArmTemplatesServiceConnection'
+          azureResourceManagerConnection: 'Visual Studio Professional Subscription (70f59e87-157b-4a3f-96e8-bae1144aa0b3)'
           subscriptionId: '70f59e87-157b-4a3f-96e8-bae1144aa0b3'
           action: 'Create Or Update Resource Group'
           resourceGroupName: 'myapp'
@@ -46,7 +46,7 @@ stages:
       displayName: 'Create webAppService from template'
       inputs:
         deploymentScope: 'Resource Group'
-        azureResourceManagerConnection: 'ArmTemplatesServiceConnection'
+        azureResourceManagerConnection: 'Visual Studio Professional Subscription (70f59e87-157b-4a3f-96e8-bae1144aa0b3)'
         subscriptionId: '70f59e87-157b-4a3f-96e8-bae1144aa0b3'
         action: 'Create Or Update Resource Group'
         resourceGroupName: 'myapp'
@@ -55,7 +55,12 @@ stages:
         csmFileLink: 'https://raw.githubusercontent.com/bwolanczyk87/app-service-web-nodejs-get-started/master/ArmTemplates/webAppService.json'
         deploymentMode: 'Incremental'
         deploymentOutputs: webAppNameOutput
-    - pwsh: $(System.DefaultWorkingDirectory)/ParseArmDeploymentOutput.ps1 -ArmOutputString '$(webAppNameOutput)' -MakeOutput -ErrorAction Stop          
+    - task: ARM Outputs@5
+      inputs:
+        ConnectedServiceNameSelector: 'ConnectedServiceNameARM'
+        ConnectedServiceNameARM: 'Visual Studio Professional Subscription (70f59e87-157b-4a3f-96e8-bae1144aa0b3)'
+        resourceGroupName: 'myapp'
+        whenLastDeploymentIsFailed: 'fail'
 
 - stage: Build
   displayName: Build stage
