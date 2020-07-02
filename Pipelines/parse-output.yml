@@ -37,7 +37,4 @@ stages:
         deploymentName: 'Web_app_deployment'
         deploymentOutputs: 'webAppNameOutput'
     - pwsh: $(System.DefaultWorkingDirectory)/ParseArmDeploymentOutput.ps1 -ArmOutputString '$(webAppNameOutput)' -MakeOutput 
-    - pwsh: $armOutputObj.PSObject.Properties | ForEach-Object {
-                Write-Output ($_.value.type).ToLower()
-            }
 
