@@ -94,8 +94,9 @@ stages:
               deploymentOutputs: webAppNameOutput
           - task: PowerShell@2
             inputs:
-              filePath: '$(System.DefaultWorkingDirectory)/ParseArmDeploymentOutput.ps1'
-              arguments: '-armOutputString ''$(webAppNameOutput)'''                
+              filePath: '$(Pipeline.Workspace)/ParseArmDeploymentOutput.ps1'
+              arguments: '-armOutputString ''$(webAppNameOutput)'''  
+          - bash: echo $(webAppName)                
           - task: AzureWebApp@1
             displayName: 'Azure Web App Deploy: '
             inputs:
