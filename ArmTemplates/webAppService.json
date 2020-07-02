@@ -43,12 +43,13 @@
             "apiVersion": "2019-08-01",
             "name": "[parameters('appName')]",
             "location": "[parameters('location')]",
-            "kind": "app",
+            "kind": "linux",
             "dependsOn": [
                 "[resourceId('Microsoft.Web/serverFarms', parameters('appServicePlanName'))]"
             ],
             "properties": {
-                "serverFarmId": "[resourceId('Microsoft.Web/serverFarms', parameters('appServicePlanName'))]"
+                "serverFarmId": "[resourceId('Microsoft.Web/serverFarms', parameters('appServicePlanName'))]",
+                "reserved": true
             }
         }
     ],
