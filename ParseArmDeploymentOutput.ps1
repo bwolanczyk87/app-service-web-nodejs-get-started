@@ -14,11 +14,9 @@ $armOutputObj = $ArmOutputString | ConvertFrom-Json
 
 $armOutputObj.PSObject.Properties | ForEach-Object {
     $type = ($_.value.type).ToLower()
-    Write-Output $type
     $keyname = $_.Name
     $vsoAttribs = @("task.setvariable variable=$keyName")
 
-    Write-Output "dupa"
     if ($type -eq "array") {
         $value = $_.Value.value.name -join ',' ## All array variables will come out as comma-separated strings
     } elseif ($type -eq "securestring") {
@@ -32,10 +30,17 @@ $armOutputObj.PSObject.Properties | ForEach-Object {
     if ($MakeOutput.IsPresent) {
         $vsoAttribs += 'isOutput=true'
     }
-    Write-Output "dupa2"
+
+    Write-Output $vsoAttribs
+    Write-Output $keyname
+    Write-Output $value
+
     $attribString = $vsoAttribs -join ';'
+    Write-Output $attribString
+
     $var = "##vso[$attribString]$value"
+
+
     Write-Output -InputObject $var
-    Write-Output $var
-    Write-Output "dupa3"
+
 }
