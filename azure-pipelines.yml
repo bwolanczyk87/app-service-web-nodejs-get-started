@@ -17,25 +17,25 @@ variables:
 stages:
 - stage: Create
   displayName: Create resources
+  dependsOn: 'Validation'
+  condition: 'succeeded()'
   pool:
     vmImage: $(vmImageName)
   jobs:
   - job: Create
-    steps:    
-    - script: echo $(webAppName)        
+    steps:
     - task: AzureResourceManagerTemplateDeployment@3
       displayName: 'Create webAppService from template'
       inputs:
         deploymentScope: 'Resource Group'
-        azureResourceManagerConnection: 'Visual Studio Professional Subscription (70f59e87-157b-4a3f-96e8-bae1144aa0b3)'
+        azureResourceManagerConnection: 'ArmTemplatesServiceConnection'
         subscriptionId: '70f59e87-157b-4a3f-96e8-bae1144aa0b3'
         action: 'Create Or Update Resource Group'
         resourceGroupName: 'myapp'
         location: 'Central US'
-        templateLocation: 'URL of the file'
+        templateLocation: URL of the file
         csmFileLink: 'https://raw.githubusercontent.com/bwolanczyk87/app-service-web-nodejs-get-started/master/ArmTemplates/webAppService.json'
         deploymentMode: 'Incremental'
-        deploymentName: 'Web app deployment'
-        deploymentOutputs: 'webAppNameOutput'
+        deploymentOutputs: webAppNameOutput
     - pwsh: $(System.DefaultWorkingDirectory)/ParseArmDeploymentOutput.ps1 -ArmOutputString $(webAppNameOutput) -MakeOutput -ErrorAction Stop 
-
+    - script: echo $(webAppName)        
