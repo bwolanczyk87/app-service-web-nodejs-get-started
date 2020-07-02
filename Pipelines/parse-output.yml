@@ -21,8 +21,7 @@ stages:
     vmImage: $(vmImageName)
   jobs:
   - job: Create
-    steps:    
-    - script: echo $(webAppName)        
+    steps:            
     - task: AzureResourceManagerTemplateDeployment@3
       displayName: 'Create webAppService from template'
       inputs:
@@ -38,4 +37,5 @@ stages:
         deploymentName: 'Web app deployment'
         deploymentOutputs: 'webAppNameOutput'
     - pwsh: $(System.DefaultWorkingDirectory)/ParseArmDeploymentOutput.ps1 -ArmOutputString '$(webAppNameOutput)' -MakeOutput -ErrorAction Stop 
+    - script: echo $(webAppName)
 
