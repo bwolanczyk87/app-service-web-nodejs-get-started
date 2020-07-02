@@ -37,8 +37,6 @@ stages:
   displayName: Build stage
   jobs:  
   - job: Build
-    dependsOn: 'Validate'
-    condition: succeeded()
     displayName: Build
     pool:
       vmImage: $(vmImageName)
