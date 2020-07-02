@@ -36,7 +36,7 @@ stages:
         deploymentMode: 'Incremental'
         deploymentName: 'Web_app_deployment'
         deploymentOutputs: 'webAppNameOutput'
-    - pwsh: $(System.DefaultWorkingDirectory)/ParseArmDeploymentOutput.ps1 -ArmOwebAppNameOutpututputString '$(webAppNameOutput)' -MakeOutput -ErrorAction Stop 
+    - pwsh: $(System.DefaultWorkingDirectory)/ParseArmDeploymentOutput.ps1 -ArmOutputString '$(webAppNameOutput)' -MakeOutput -ErrorAction Stop 
     - script: echo '$(webAppName)'
     - script: echo '$(webAppNameOutput)'
     - script: echo '$(webAppNameOutput).Value'
