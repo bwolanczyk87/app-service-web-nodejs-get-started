@@ -14,6 +14,7 @@ variables:
   # Agent VM image name
   vmImageName: 'ubuntu-latest'
 
+stages:
 - stage: Create
   displayName: Create resources
   dependsOn: 'Validation'
