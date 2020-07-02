@@ -17,6 +17,7 @@ $armOutputObj.PSObject.Properties | ForEach-Object {
     $keyname = $_.Name
     $vsoAttribs = @("task.setvariable variable=$keyName")
 
+    Write-Output "dupa"
     if ($type -eq "array") {
         $value = $_.Value.value.name -join ',' ## All array variables will come out as comma-separated strings
     } elseif ($type -eq "securestring") {
@@ -30,8 +31,10 @@ $armOutputObj.PSObject.Properties | ForEach-Object {
     if ($MakeOutput.IsPresent) {
         $vsoAttribs += 'isOutput=true'
     }
-
+    Write-Output "dupa2"
     $attribString = $vsoAttribs -join ';'
     $var = "##vso[$attribString]$value"
     Write-Output -InputObject $var
+    Write-Output $var
+    Write-Output "dupa3"
 }
