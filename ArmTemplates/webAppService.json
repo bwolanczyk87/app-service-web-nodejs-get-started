@@ -36,20 +36,22 @@
             "sku": {
                 "name": "[variables('appServicePlanSku')]"
             },
-            "kind": "webAppLinux"
+            "kind": "app",
+            "properties": {
+                "reserved": true
+            }
         },
         {
             "type": "Microsoft.Web/sites",
             "apiVersion": "2019-08-01",
             "name": "[parameters('appName')]",
             "location": "[parameters('location')]",
-            "kind": "webAppLinux",
+            "kind": "app",
             "dependsOn": [
                 "[resourceId('Microsoft.Web/serverFarms', parameters('appServicePlanName'))]"
             ],
             "properties": {
-                "serverFarmId": "[resourceId('Microsoft.Web/serverFarms', parameters('appServicePlanName'))]",
-                "reserved": true
+                "serverFarmId": "[resourceId('Microsoft.Web/serverFarms', parameters('appServicePlanName'))]"
             }
         }
     ],
