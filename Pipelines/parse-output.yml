@@ -37,5 +37,14 @@ stages:
         deploymentName: 'Web_app_deployment'
         deploymentOutputs: 'webAppNameOutput'
     - pwsh: $(System.DefaultWorkingDirectory)/ParseArmDeploymentOutput.ps1 -ArmOutputString '$(webAppNameOutput)' -MakeOutput 
-    - pwsh: echo $(webAppName)
+    - pwsh: $webAppNameOutput.PSObject.Properties | ForEach-Object {
+                $keyname = $_.Name
+                $value = $_.Value.value
+
+                ## Creates a standard pipeline variable
+                Write-Output "##vso[task.setvariable variable=$keyName;]$value"
+                
+                ## Creates an output variable
+                Write-Output "##vso[task.setvariable variable=$keyName;isOutput=true]$value"
+            }
 
