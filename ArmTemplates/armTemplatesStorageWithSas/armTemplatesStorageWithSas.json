@@ -11,7 +11,7 @@
         },
         "managedIdentityName": {
             "type": "string",
-            "defaultValue": "[concat(uniqueString(resourceGroup().id), '-midentity')]",
+            "defaultValue": "[concat(uniqueString(resourceGroup().name), '-midentity')]",
             "metadata": {
                 "description": "Name of managed identity use to create keyVault."
             }
@@ -24,7 +24,7 @@
         },
         "StorageAccountName": {
             "type": "string",
-            "defaultValue": "[concat(uniqueString(resourceGroup().id), 'storage')]",
+            "defaultValue": "[concat(uniqueString(resourceGroup().name), 'storage')]",
             "metadata": {
                 "description": "Name of Storage Account to Create"
             }
