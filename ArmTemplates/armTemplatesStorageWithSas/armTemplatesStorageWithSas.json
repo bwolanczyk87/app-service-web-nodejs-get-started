@@ -89,7 +89,6 @@
             "tags": {
                 "displayName": "[parameters('keyVaultName')]"
             },
-            "languageExpression": "tenantId",
             "properties": {
                 "enabledForDeployment": true,
                 "enabledForTemplateDeployment": true,
