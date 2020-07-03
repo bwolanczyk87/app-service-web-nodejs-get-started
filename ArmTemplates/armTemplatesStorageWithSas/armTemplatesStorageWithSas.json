@@ -52,7 +52,7 @@
         {
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2019-10-01",
-            "name": "linkedTemplate",
+            "name": "linkedTemplateStorageAccount",
             "properties": {
                 "mode": "Incremental",
                 "templateLink": {
@@ -63,7 +63,8 @@
                     "storageAccountName": {"value": "[parameters('storageAccountName')]"} ,
                     "containerName": {"value": "[parameters('containerName')]"} 
                 }
-            }           
+            },
+            "deploymenName":            
         },
         {
             "type": "Microsoft.ManagedIdentity/userAssignedIdentities",
@@ -115,7 +116,8 @@
             "apiVersion": "2018-02-14",
             "type": "Microsoft.KeyVault/vaults/secrets",
             "dependsOn": [
-                "[concat('Microsoft.KeyVault/vaults/', parameters('keyVaultName'))]"
+                "[concat('Microsoft.KeyVault/vaults/', parameters('keyVaultName'))]",
+                "Microsoft.Resources/deployments/linkedTemplateStorageAccount"
             ],
             "name": "[concat(parameters('keyVaultName'), '/', 'StorageSaSToken')]",
             "properties": {
