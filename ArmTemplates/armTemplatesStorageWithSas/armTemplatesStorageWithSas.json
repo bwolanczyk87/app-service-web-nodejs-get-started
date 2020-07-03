@@ -41,7 +41,6 @@
             "defaultValue": {
                 "signedServices": "b",
                 "signedPermission": "rw",
-                "signedExpiry": "2019-03-01T00:00:01Z",
                 "signedResourceTypes": "o"
             },
             "metadata": {
@@ -90,6 +89,7 @@
             "tags": {
                 "displayName": "[parameters('keyVaultName')]"
             },
+            "languageExpression": "tenantId",
             "properties": {
                 "enabledForDeployment": true,
                 "enabledForTemplateDeployment": true,
