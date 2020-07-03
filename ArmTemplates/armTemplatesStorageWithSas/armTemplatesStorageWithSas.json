@@ -4,14 +4,14 @@
     "parameters": {
         "keyVaultName": {
             "type": "string",
-            "defaultValue": "adpkeyVault",
+            "defaultValue": "adpbarkeyVault",
             "metadata": {
                 "description": "Name of KeyVault to Store SaS Token"
             }
         },
         "managedIdentityName": {
             "type": "string",
-            "defaultValue": "adpmidentity",
+            "defaultValue": "adpbarmidentity",
             "metadata": {
                 "description": "Name of managed identity use to create keyVault."
             }
@@ -24,7 +24,7 @@
         },
         "storageAccountName": {
             "type": "string",
-            "defaultValue": "adpstorage')]",
+            "defaultValue": "adpbarstorage",
             "metadata": {
                 "description": "Name of Storage Account to Create"
             }
