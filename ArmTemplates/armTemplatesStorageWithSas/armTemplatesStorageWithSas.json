@@ -63,8 +63,7 @@
                     "storageAccountName": {"value": "[parameters('storageAccountName')]"} ,
                     "containerName": {"value": "[parameters('containerName')]"} 
                 }
-            },
-            "deploymenName":            
+            }          
         },
         {
             "type": "Microsoft.ManagedIdentity/userAssignedIdentities",
