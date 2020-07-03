@@ -65,16 +65,7 @@ stages:
     - publish: $(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip
       artifact: drop     
     - publish: $(System.DefaultWorkingDirectory)/ParseArmDeploymentOutput.ps1
-      artifact: parse
-
-- stage: Output
-  displayName: Output stage
-  jobs:  
-  - job: Output
-    displayName: Output
-    pool:
-      vmImage: $(vmImageName)
-    
+      artifact: parse    
 
 - stage: Deploy
   displayName: Deploy stage
@@ -106,8 +97,7 @@ stages:
           - task: PowerShell@2
             inputs:
               filePath: '$(Pipeline.Workspace)/parse/ParseArmDeploymentOutput.ps1'
-              arguments: '-armOutputString ''$(webAppNameOutput)'''  
-          - bash: echo $(webAppName)               
+              arguments: '-armOutputString ''$(webAppNameOutput)'''           
               
           - task: AzureRmWebAppDeployment@4
             inputs:
