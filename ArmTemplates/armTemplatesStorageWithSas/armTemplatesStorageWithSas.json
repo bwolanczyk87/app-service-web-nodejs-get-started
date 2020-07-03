@@ -4,14 +4,14 @@
     "parameters": {
         "keyVaultName": {
             "type": "string",
-            "defaultValue": "[concat(uniqueString(resourceGroup().name), '-kv')]",
+            "defaultValue": "adpkeyVault",
             "metadata": {
                 "description": "Name of KeyVault to Store SaS Token"
             }
         },
         "managedIdentityName": {
             "type": "string",
-            "defaultValue": "[concat(uniqueString(resourceGroup().name), '-midentity')]",
+            "defaultValue": "adpmidentity",
             "metadata": {
                 "description": "Name of managed identity use to create keyVault."
             }
@@ -22,9 +22,9 @@
                 "description": "Azure AD Tenant ID"
             }
         },
-        "StorageAccountName": {
+        "storageAccountName": {
             "type": "string",
-            "defaultValue": "[concat(uniqueString(resourceGroup().id), 'storage')]",
+            "defaultValue": "adpstorage')]",
             "metadata": {
                 "description": "Name of Storage Account to Create"
             }
@@ -50,27 +50,20 @@
     },
     "resources": [
         {
-            "type": "Microsoft.Storage/storageAccounts",
-            "apiVersion": "2018-07-01",
-            "name": "[parameters('StorageAccountName')]",
-            "location": "[resourceGroup().location]",
-            "tags": {
-                "displayName": "[parameters('StorageAccountName')]"
-            },
-            "sku": {
-                "name": "Standard_LRS"
-            },
-            "kind": "StorageV2",
-            "resources": [
-            {
-                "type": "blobServices/containers",
-                "apiVersion": "2019-06-01",
-                "name": "[concat('default/', parameters('containerName'))]",
-                "dependsOn": [
-                    "[parameters('storageAccountName')]"
-                ]
-            }
-            ]
+            "type": "Microsoft.Resources/deployments",
+            "apiVersion": "2019-10-01",
+            "name": "linkedTemplate",
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "https://raw.githubusercontent.com/Azure/azure-quickstart-templates/master/101-storage-blob-container/azuredeploy.json",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "storageAccountName": {"value": "[parameters('storageAccountName')]"} ,
+                    "containerName": {"value": "[parameters('containerName')]"} 
+                }
+            }           
         },
         {
             "type": "Microsoft.ManagedIdentity/userAssignedIdentities",
@@ -126,7 +119,7 @@
             ],
             "name": "[concat(parameters('keyVaultName'), '/', 'StorageSaSToken')]",
             "properties": {
-                "value": "[listAccountSas(parameters('StorageAccountName'), '2018-07-01', parameters('accountSasProperties')).accountSasToken]"
+                "value": "[listAccountSas(parameters('storageAccountName'), '2018-07-01', parameters('accountSasProperties')).accountSasToken]"
             }
         }
     ],
