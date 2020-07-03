@@ -30,7 +30,7 @@ stages:
           resourceGroupName: 'myapp'
           location: 'Central US'
           templateLocation: 'Linked artifact'
-          csmFile: '$(System.DefaultWorkingDirectory)/ArmTemplates/webAppService.json'
+          csmFile: '$(System.DefaultWorkingDirectory)/ArmTemplates/webAppService/webAppService.json'
           deploymentMode: 'Validation'    
 
 - stage: Build
