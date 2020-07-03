@@ -4,7 +4,7 @@
     "parameters": {
         "keyVaultName": {
             "type": "string",
-            "defaultValue": "[concat(uniqueString(resourceGroup().id), '-kv')]",
+            "defaultValue": "[concat(uniqueString(resourceGroup().name), '-kv')]",
             "metadata": {
                 "description": "Name of KeyVault to Store SaS Token"
             }
@@ -41,7 +41,6 @@
             "defaultValue": {
                 "signedServices": "b",
                 "signedPermission": "rw",
-                "signedExpiry": "2019-03-01T00:00:01Z",
                 "signedResourceTypes": "o"
             },
             "metadata": {
@@ -68,7 +67,7 @@
                 "apiVersion": "2019-06-01",
                 "name": "[concat('default/', parameters('containerName'))]",
                 "dependsOn": [
-                "[parameters('storageAccountName')]"
+                    "[parameters('storageAccountName')]"
                 ]
             }
             ]
