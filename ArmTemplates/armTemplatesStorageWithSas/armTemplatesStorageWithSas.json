@@ -4,14 +4,14 @@
     "parameters": {
         "keyVaultName": {
             "type": "string",
-            "defaultValue": "[concat(uniqueString(resourceGroup().id), '-kv')]",
+            "defaultValue": "[concat(uniqueString(resourceGroup().name), '-kv')]",
             "metadata": {
                 "description": "Name of KeyVault to Store SaS Token"
             }
         },
         "managedIdentityName": {
             "type": "string",
-            "defaultValue": "[concat(uniqueString(resourceGroup().id), '-midentity')]",
+            "defaultValue": "[concat(uniqueString(resourceGroup().name), '-midentity')]",
             "metadata": {
                 "description": "Name of managed identity use to create keyVault."
             }
@@ -68,7 +68,7 @@
                 "apiVersion": "2019-06-01",
                 "name": "[concat('default/', parameters('containerName'))]",
                 "dependsOn": [
-                "[parameters('storageAccountName')]"
+                    "[parameters('storageAccountName')]"
                 ]
             }
             ]
