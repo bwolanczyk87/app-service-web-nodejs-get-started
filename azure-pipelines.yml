@@ -42,7 +42,6 @@ steps:
     csmFileLink: 'https://raw.githubusercontent.com/bwolanczyk87/app-service-web-nodejs-get-started/azure-pipelines-storageWithSAS/ArmTemplates/keyVoult.json'
     csmParametersFileLink: 'https://raw.githubusercontent.com/bwolanczyk87/app-service-web-nodejs-get-started/azure-pipelines-storageWithSAS/ArmTemplates/keyVoult.parameters.json'
     deploymentMode: 'Incremental'
-    deploymentOutputs: keyVaultNameOutput
 
 
   
