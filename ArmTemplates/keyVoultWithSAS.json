@@ -2,10 +2,22 @@
     "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
+        "storageAccountName": {
+            "type": "string",
+            "metadata": {
+                "description": "Name of Storage Account to Create"
+            }
+        },
         "tenantID": {
             "type": "string",
             "metadata": {
                 "description": "Azure AD Tenant ID"
+            }
+        },
+        "objectID": {
+            "type": "string",
+            "metadata": {
+                "description": "Azure AD user ID"
             }
         },
         "keyVaultName": {
@@ -14,12 +26,23 @@
             "metadata": {
                 "description": "Name of KeyVault to Store SaS Token"
             }
+        },
+        "accountSasProperties": {
+            "type": "object",
+            "defaultValue": {
+                "signedServices": "b",
+                "signedPermission": "rw",
+                "signedResourceTypes": "o"
+            },
+            "metadata": {
+                "description": "SAS object for access to ARM templates."
+            }
         }
     },
     "resources": [      
         {
             "type": "Microsoft.KeyVault/vaults",
-            "apiVersion": "2018-02-14",
+            "apiVersion": "2015-06-01",
             "name": "[parameters('keyVaultName')]",
             "location": "[resourceGroup().location]",
             "tags": {
@@ -30,10 +53,35 @@
                 "enabledForTemplateDeployment": true,
                 "enabledForDiskEncryption": true,
                 "tenantId": "[parameters('tenantID')]",
+                "accessPolicies": [
+                    {
+                        "tenantId": "[parameters('tenantID')]",
+                        "objectId": "[parameters('objectId')]",  
+                        "permissions": {
+                            "keys": [
+                                "all"
+                            ],
+                            "secrets": [
+                                "all"
+                            ]
+                        }
+                    }
+                ],
                 "sku": {
                     "name": "standard",
                     "family": "A"
                 }
+            }
+        },
+        {
+            "apiVersion": "2015-06-01",
+            "type": "Microsoft.KeyVault/vaults/secrets",
+            "dependsOn": [
+                "[concat('Microsoft.KeyVault/vaults/', parameters('keyVaultName'))]"
+            ],
+            "name": "[concat(parameters('keyVaultName'), '/', 'StorageSaSToken')]",
+            "properties": {
+                "value": "[listAccountSas(parameters('storageAccountName'), '2018-07-01', parameters('accountSasProperties')).accountSasToken]"
             }
         }
     ],
