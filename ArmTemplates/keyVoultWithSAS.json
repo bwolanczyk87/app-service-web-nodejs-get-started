@@ -23,7 +23,7 @@
         },
         "managedIdentityName": {
             "type": "string",
-            "defaultValue": "[concat(resourceGroup().id, '-mi')]",
+            "defaultValue": "bartosz.wolanczyk@avanade.com",
             "metadata": {
                 "description": "Name of managed identity use to create keyVault."
             }
@@ -41,12 +41,6 @@
         }
     },
     "resources": [      
-        {
-            "type": "Microsoft.ManagedIdentity/userAssignedIdentities",
-            "name": "[parameters('managedIdentityName')]",
-            "apiVersion": "2018-11-30",
-            "location": "[resourceGroup().location]"
-        },
         {
             "type": "Microsoft.KeyVault/vaults",
             "apiVersion": "2018-02-14",
