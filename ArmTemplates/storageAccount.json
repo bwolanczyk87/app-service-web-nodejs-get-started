@@ -10,7 +10,7 @@
     },
     "containerName": {
       "type": "string",
-      "defaultValue": "ArmTemplates",
+      "defaultValue": "armtemplates",
       "metadata": {
         "description": "Specifies the name of the blob container."
       }
