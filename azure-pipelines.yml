@@ -26,7 +26,7 @@ steps:
 
 - task: PowerShell@2
   inputs:
-    filePath: '$(System.DefaultWorkingDirectory)/parse/ParseArmDeploymentOutput.ps1'
+    filePath: '$(System.DefaultWorkingDirectory)/ParseArmDeploymentOutput.ps1'
     arguments: '-armOutputString ''$(storageAccountNameOutput)''' 
 
 
