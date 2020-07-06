@@ -72,17 +72,6 @@
                     "family": "A"
                 }
             }
-        },
-        {
-            "apiVersion": "2015-06-01",
-            "type": "Microsoft.KeyVault/vaults/secrets",
-            "dependsOn": [
-                "[concat('Microsoft.KeyVault/vaults/', parameters('keyVaultName'))]"
-            ],
-            "name": "[concat(parameters('keyVaultName'), '/', 'StorageSaSToken')]",
-            "properties": {
-                "value": "[listAccountSas(parameters('storageAccountName'), '2018-07-01', parameters('accountSasProperties')).accountSasToken]"
-            }
         }
     ],
     "outputs": {}
