@@ -19,6 +19,28 @@ steps:
     resourceGroupName: 'myAppDocker'
     location: 'Central US'
     templateLocation: 'Linked artifact'
-    csmFile: '$(System.DefaultWorkingDirectory)/ArmTemplates/storageAccount.json'
+    csmFile: 'storageAccount.json'
+    csmParametersFile: '-storageAccountName myapp66sa'
     deploymentMode: 'Incremental'
+    deploymentOutputs: storageAccountNameOutput
+
+- task: ARMOutputParserExtension@1
+  inputs:
+    armOutput: '$(storageAccountNameOutput)'
+    variablePrefix: 'sat_'
+
+- task: AzureResourceManagerTemplateDeployment@3
+  inputs:
+    deploymentScope: 'Resource Group'
+    azureResourceManagerConnection: 'Visual Studio Professional Subscription (70f59e87-157b-4a3f-96e8-bae1144aa0b3)'
+    subscriptionId: '70f59e87-157b-4a3f-96e8-bae1144aa0b3'
+    action: 'Create Or Update Resource Group'
+    resourceGroupName: 'myapp'
+    location: 'Central US'
+    templateLocation: 'Linked artifact'
+    csmFile: '$(System.DefaultWorkingDirectory)/ArmTemplates/keyVoultWithSAS.json'
+    csmParametersFile: '-storageAccountName $(sat_storageAccountName) -tenantID 866b717c-31b3-49d8-92b3-9645d41ca9ef'
+    deploymentMode: 'Incremental'
+
+
 
