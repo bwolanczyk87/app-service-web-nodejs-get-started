@@ -19,7 +19,6 @@ steps:
     resourceGroupName: 'myAppDocker'
     location: 'Central US'
     templateLocation: 'Linked artifact'
-    csmFile: '$(System.DefaultWorkingDirectory)/ArmTemplates/armTemplatesStorageWithSas/armTemplatesStorageWithSas.json'
-    csmParametersFile: '$(System.DefaultWorkingDirectory)/ArmTemplates/armTemplatesStorageWithSas/armTemplatesStorageWithSas.parameters.json'
+    csmFile: '$(System.DefaultWorkingDirectory)/ArmTemplates/storageAccount.json'
     deploymentMode: 'Incremental'
 
