@@ -13,7 +13,8 @@
             "metadata": {
                 "description": "Azure AD Tenant ID"
             }
-        },"objectID": {
+        },
+        "objectID": {
             "type": "string",
             "metadata": {
                 "description": "Azure AD user ID"
@@ -74,18 +75,6 @@
                     "name": "standard",
                     "family": "A"
                 }
-            }
-        },
-        {
-            "apiVersion": "2018-02-14",
-            "type": "Microsoft.KeyVault/vaults/secrets",
-            "dependsOn": [
-                "[concat('Microsoft.KeyVault/vaults/', parameters('keyVaultName'))]",
-                "Microsoft.Resources/deployments/linkedTemplateStorageAccount"
-            ],
-            "name": "[concat(parameters('keyVaultName'), '/', 'StorageSaSToken')]",
-            "properties": {
-                "value": "[listAccountSas(parameters('storageAccountName'), '2018-07-01', parameters('accountSasProperties')).accountSasToken]"
             }
         }
     ],
