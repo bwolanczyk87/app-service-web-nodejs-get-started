@@ -13,19 +13,17 @@
             "metadata": {
                 "description": "Azure AD Tenant ID"
             }
+        },"objectID": {
+            "type": "string",
+            "metadata": {
+                "description": "Azure AD user ID"
+            }
         },
         "keyVaultName": {
             "type": "string",
             "defaultValue": "[concat(resourceGroup().id, '-kv')]",
             "metadata": {
                 "description": "Name of KeyVault to Store SaS Token"
-            }
-        },
-        "managedIdentityName": {
-            "type": "string",
-            "defaultValue": "bartosz.wolanczyk@avanade.com",
-            "metadata": {
-                "description": "Name of managed identity use to create keyVault."
             }
         },
         "accountSasProperties": {
@@ -46,9 +44,6 @@
             "apiVersion": "2018-02-14",
             "name": "[parameters('keyVaultName')]",
             "location": "[resourceGroup().location]",
-            "dependsOn": [
-                "[concat('Microsoft.ManagedIdentity/userAssignedIdentities/', parameters('managedIdentityName'))]"
-            ],
             "tags": {
                 "displayName": "[parameters('keyVaultName')]"
             },
@@ -60,7 +55,7 @@
                 "accessPolicies": [
                     {
                         "tenantId": "[parameters('tenantID')]",
-                        "objectId": "[reference(ResourceId(resourceGroup().name, 'Microsoft.ManagedIdentity/userAssignedIdentities', parameters('managedIdentityName'))).properties.principalId]",
+                        "objectId": "[parameters('objectId')]",  
                         "permissions": {
                             "keys": [
                                 "list",
