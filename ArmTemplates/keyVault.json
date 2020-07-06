@@ -65,5 +65,10 @@
             "dependsOn": []
         }
     ],
-    "outputs": {}
+    "outputs": {
+         "keyVaultName": {
+            "type": "string",
+            "value": "[parameters('name')]"
+        }
+    }
 }
