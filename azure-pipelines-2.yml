@@ -18,12 +18,16 @@ steps:
     echo See https://aka.ms/yaml
   displayName: 'Run a multi-line script'
 
-- task: AzureFileCopy@4
+
+
+- task: AzureResourceManagerTemplateDeployment@3
   inputs:
-    SourcePath: 'C:\Users\bartosz.wolanczyk\source\repos\myapp\app-service-web-nodejs-get-started\ArmTemplates\containerRegistry'
-    azureSubscription: 'Visual Studio Professional Subscription (70f59e87-157b-4a3f-96e8-bae1144aa0b3)'
-    Destination: 'AzureBlob'
-    storage: 'myapp66sa'
-    ContainerName: 'armtemplates'
-
-
+    deploymentScope: 'Resource Group'
+    azureResourceManagerConnection: 'Visual Studio Professional Subscription (70f59e87-157b-4a3f-96e8-bae1144aa0b3)'
+    subscriptionId: '70f59e87-157b-4a3f-96e8-bae1144aa0b3'
+    action: 'Create Or Update Resource Group'
+    resourceGroupName: 'myAppDocker'
+    location: 'Central US'
+    templateLocation: 'URL of the file'
+    csmFileLink: 'https://myapp66sa.blob.core.windows.net/armtemplates/ArmTemplates/storageAccount.json'
+    deploymentMode: 'Incremental'
