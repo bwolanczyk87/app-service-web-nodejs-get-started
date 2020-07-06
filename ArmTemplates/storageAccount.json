@@ -1,0 +1,39 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "storageAccountName": {
+            "type": "string",
+            "defaultValue": "storage1987account",
+            "metadata": {
+                "description": "Name of Storage Account to Create"
+            }
+        },
+        "containerName": {
+            "type": "string",
+            "defaultValue": "armTemplates",
+            "metadata": {
+                "description": "Specifies the name of the blob container."
+                }
+        }
+    },
+    "resources": [
+        {
+            "type": "Microsoft.Resources/deployments",
+            "apiVersion": "2019-10-01",
+            "name": "linkedTemplate",
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "https://raw.githubusercontent.com/Azure/azure-quickstart-templates/master/101-storage-blob-container/azuredeploy.json",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "storageAccountName": {"value": "[parameters('storageAccountName')]"} ,
+                    "containerName": {"value": "[parameters('containerName')]"} 
+                }
+            }          
+        }
+    ],
+    "outputs": {}
+}
