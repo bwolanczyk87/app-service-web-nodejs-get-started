@@ -2,22 +2,10 @@
     "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
-        "storageAccountName": {
-            "type": "string",
-            "metadata": {
-                "description": "Name of Storage Account to Create"
-            }
-        },
         "tenantID": {
             "type": "string",
             "metadata": {
                 "description": "Azure AD Tenant ID"
-            }
-        },
-        "objectID": {
-            "type": "string",
-            "metadata": {
-                "description": "Azure AD user ID"
             }
         },
         "keyVaultName": {
@@ -25,17 +13,6 @@
             "defaultValue": "[concat(resourceGroup().id, '-kv')]",
             "metadata": {
                 "description": "Name of KeyVault to Store SaS Token"
-            }
-        },
-        "accountSasProperties": {
-            "type": "object",
-            "defaultValue": {
-                "signedServices": "b",
-                "signedPermission": "rw",
-                "signedResourceTypes": "o"
-            },
-            "metadata": {
-                "description": "SAS object for access to ARM templates."
             }
         }
     },
@@ -53,24 +30,6 @@
                 "enabledForTemplateDeployment": true,
                 "enabledForDiskEncryption": true,
                 "tenantId": "[parameters('tenantID')]",
-                "accessPolicies": [
-                    {
-                        "tenantId": "[parameters('tenantID')]",
-                        "objectId": "[parameters('objectId')]",  
-                        "permissions": {
-                            "keys": [
-                                "list",
-                                "get",
-                                "set"
-                            ],
-                            "secrets": [
-                                "list",
-                                "get",
-                                "set"
-                            ]
-                        }
-                    }
-                ],
                 "sku": {
                     "name": "standard",
                     "family": "A"
