@@ -19,7 +19,7 @@ steps:
     resourceGroupName: 'myAppDocker'
     location: 'Central US'
     templateLocation: 'Linked artifact'
-    csmFile: 'storageAccount.json'
+    csmFile: '$(System.DefaultWorkingDirectory)/ArmTemplates/storageAccount.json'
     csmParametersFile: '-storageAccountName myapp66sa'
     deploymentMode: 'Incremental'
     deploymentOutputs: storageAccountNameOutput
