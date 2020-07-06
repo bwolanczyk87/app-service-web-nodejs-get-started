@@ -24,14 +24,10 @@ steps:
     deploymentMode: 'Incremental'
     deploymentOutputs: storageAccountNameOutput
 
-- task: ARM Outputs@5
+- task: PowerShell@2
   inputs:
-    ConnectedServiceNameSelector: 'ConnectedServiceNameARM'
-    ConnectedServiceNameARM: 'Visual Studio Professional Subscription (70f59e87-157b-4a3f-96e8-bae1144aa0b3)'
-    resourceGroupName: 'myapp'
-    prefix: 'sat'
-    outputNames: 'storageAccountNameOutput'
-    whenLastDeploymentIsFailed: 'fail'
+    filePath: '$(System.DefaultWorkingDirectory)/parse/ParseArmDeploymentOutput.ps1'
+    arguments: '-armOutputString ''$(storageAccountNameOutput)''' 
 
 
 - task: AzureResourceManagerTemplateDeployment@3
@@ -44,7 +40,7 @@ steps:
     location: 'Central US'
     templateLocation: 'URL of the file'
     csmFileLink: 'https://raw.githubusercontent.com/bwolanczyk87/app-service-web-nodejs-get-started/azure-pipelines-storageWithSAS/ArmTemplates/keyVoultWithSAS.json'
-    overrideParameters: '-storageAccountName $(sat_storageAccountName) -tenantID 866b717c-31b3-49d8-92b3-9645d41ca9ef'
+    overrideParameters: '-storageAccountName $(storageAccountName) -tenantID 866b717c-31b3-49d8-92b3-9645d41ca9ef'
     deploymentMode: 'Incremental'
 
 
