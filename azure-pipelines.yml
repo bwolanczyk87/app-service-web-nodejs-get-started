@@ -39,8 +39,8 @@ steps:
     resourceGroupName: 'myapp'
     location: 'Central US'
     templateLocation: 'URL of the file'
-    csmFileLink: 'https://raw.githubusercontent.com/bwolanczyk87/app-service-web-nodejs-get-started/azure-pipelines-storageWithSAS/ArmTemplates/keyVoultWithSAS.json'
-    overrideParameters: '-storageAccountName $(storageAccountName) -tenantID 866b717c-31b3-49d8-92b3-9645d41ca9ef -objectID 39f0128b-10cc-445d-8949-f3f43cf5054f'
+    csmFileLink: 'https://raw.githubusercontent.com/bwolanczyk87/app-service-web-nodejs-get-started/azure-pipelines-storageWithSAS/ArmTemplates/keyVoult.json'
+    csmParametersFileLink: 'https://raw.githubusercontent.com/bwolanczyk87/app-service-web-nodejs-get-started/azure-pipelines-storageWithSAS/ArmTemplates/keyVoult.parameters.json'
     deploymentMode: 'Incremental'
 
   
