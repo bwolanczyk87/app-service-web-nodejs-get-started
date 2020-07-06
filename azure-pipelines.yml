@@ -20,7 +20,7 @@ steps:
     location: 'Central US'
     templateLocation: 'URL of the file'
     csmFileLink: 'https://raw.githubusercontent.com/bwolanczyk87/app-service-web-nodejs-get-started/azure-pipelines-storageWithSAS/ArmTemplates/storageAccount.json'
-    csmParametersFile: '-storageAccountName myapp66sa'
+    overrideParameters: '-storageAccountName myapp66sa'
     deploymentMode: 'Incremental'
     deploymentOutputs: storageAccountNameOutput
 
@@ -39,7 +39,7 @@ steps:
     location: 'Central US'
     templateLocation: 'URL of the file'
     csmFileLink: 'https://raw.githubusercontent.com/bwolanczyk87/app-service-web-nodejs-get-started/azure-pipelines-storageWithSAS/ArmTemplates/keyVoultWithSAS.json'
-    csmParametersFile: '-storageAccountName myapp66sa -tenantID 866b717c-31b3-49d8-92b3-9645d41ca9ef'
+    overrideParameters: '-storageAccountName myapp66sa -tenantID 866b717c-31b3-49d8-92b3-9645d41ca9ef'
     deploymentMode: 'Incremental'
 
 
