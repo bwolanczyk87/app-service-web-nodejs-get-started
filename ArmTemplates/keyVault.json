@@ -64,11 +64,5 @@
             "tags": {},
             "dependsOn": []
         }
-    ],
-    "outputs": {
-         "keyVaultName": {
-            "type": "string",
-            "value": "[parameters('name')]"
-        }
-    }
+    ]
 }
