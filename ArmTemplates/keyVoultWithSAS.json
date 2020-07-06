@@ -2,18 +2,10 @@
     "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
-        "keyVaultName": {
+        "storageAccountName": {
             "type": "string",
-            "defaultValue": "adpbarkeyVault",
             "metadata": {
-                "description": "Name of KeyVault to Store SaS Token"
-            }
-        },
-        "managedIdentityName": {
-            "type": "string",
-            "defaultValue": "adpbarmidentity",
-            "metadata": {
-                "description": "Name of managed identity use to create keyVault."
+                "description": "Name of Storage Account to Create"
             }
         },
         "tenantID": {
@@ -22,19 +14,19 @@
                 "description": "Azure AD Tenant ID"
             }
         },
-        "storageAccountName": {
+        "keyVaultName": {
             "type": "string",
-            "defaultValue": "adpbarstorage",
+            "defaultValue": "[concat(resourceGroup().id, '-kv')]",
             "metadata": {
-                "description": "Name of Storage Account to Create"
+                "description": "Name of KeyVault to Store SaS Token"
             }
         },
-        "containerName": {
+        "managedIdentityName": {
             "type": "string",
-            "defaultValue": "armTemplates",
+            "defaultValue": "[concat(resourceGroup().id, '-mi')]",
             "metadata": {
-                "description": "Specifies the name of the blob container."
-                }
+                "description": "Name of managed identity use to create keyVault."
+            }
         },
         "accountSasProperties": {
             "type": "object",
@@ -48,23 +40,7 @@
             }
         }
     },
-    "resources": [
-        {
-            "type": "Microsoft.Resources/deployments",
-            "apiVersion": "2019-10-01",
-            "name": "linkedTemplateStorageAccount",
-            "properties": {
-                "mode": "Incremental",
-                "templateLink": {
-                    "uri": "https://raw.githubusercontent.com/Azure/azure-quickstart-templates/master/101-storage-blob-container/azuredeploy.json",
-                    "contentVersion": "1.0.0.0"
-                },
-                "parameters": {
-                    "storageAccountName": {"value": "[parameters('storageAccountName')]"} ,
-                    "containerName": {"value": "[parameters('containerName')]"} 
-                }
-            }          
-        },
+    "resources": [      
         {
             "type": "Microsoft.ManagedIdentity/userAssignedIdentities",
             "name": "[parameters('managedIdentityName')]",
