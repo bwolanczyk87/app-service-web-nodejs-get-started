@@ -31,3 +31,4 @@ steps:
     templateLocation: 'URL of the file'
     csmFileLink: 'https://myapp66sa.blob.core.windows.net/armtemplates/ArmTemplates/storageAccount.json?sp=rw&st=2020-07-06T14:21:24Z&se=2020-09-06T22:21:24Z&spr=https&sv=2019-10-10&sr=b&sig=BgejKdjOVrwzBkvrw9BHtoD2o0mH5IN%2FCfl%2BozKghzs%3D'
     deploymentMode: 'Incremental'
+    overrideParameters: '-storageAccountName mydokerappstorage66'
