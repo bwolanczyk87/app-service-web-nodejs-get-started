@@ -24,7 +24,7 @@ steps:
 - task: AzureCLI@2
   inputs:
     azureSubscription: 'Visual Studio Professional Subscription(70f59e87-157b-4a3f-96e8-bae1144aa0b3)'
-    scriptType: 'ps'
+    scriptType: ps
     scriptLocation: 'inlineScript'
     inlineScript: |
       $sp= az ad sp create-for-rbac --skip-assignment
