@@ -17,7 +17,7 @@ variables:
   dockerfilePath: '**/Dockerfile'
   tag: '$(Build.BuildId)'
   imagePullSecret: 'yudmivr5ulpmcacr1562dd87-auth'
-  k8sNamespace: 'kube-public'
+  k8sNamespace: 'myapp'
 
   # Agent VM image name
   vmImageName: 'ubuntu-latest'
@@ -54,7 +54,7 @@ stages:
     displayName: Deploy
     pool:
       vmImage: $(vmImageName)
-    environment: 'bwolanczyk87appservicewebnodejsgetstarted-1779.kube-public'
+    environment: 'myapp'
     strategy:
       runOnce:
         deploy:
