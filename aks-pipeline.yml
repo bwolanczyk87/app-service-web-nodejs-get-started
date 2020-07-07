@@ -9,20 +9,38 @@ trigger:
 pool:
   vmImage: 'ubuntu-latest'
 
-steps:
-- task: AzureResourceManagerTemplateDeployment@3
-  inputs:
-    deploymentScope: 'Resource Group'
-    azureResourceManagerConnection: 'Visual Studio Professional Subscription(70f59e87-157b-4a3f-96e8-bae1144aa0b3)'
-    subscriptionId: '70f59e87-157b-4a3f-96e8-bae1144aa0b3'
-    action: 'Create Or Update Resource Group'
-    resourceGroupName: 'myapp'
-    location: 'Central US'
-    templateLocation: 'URL of the file'
-    csmFileLink: 'https://myapp66sa.blob.core.windows.net/armtemplates/ArmTemplates/containerRegistry/containerRegistry.json?sp=r&st=2020-07-07T07:54:31Z&se=2020-07-07T15:54:31Z&spr=https&sv=2019-10-10&sr=b&sig=L8JqTw0VHs3LF6IvoWD6yLp08RD0p6Qdv0SAzG8wQVQ%3D'
-    csmParametersFileLink: 'https://myapp66sa.blob.core.windows.net/armtemplates/ArmTemplates/containerRegistry/containerRegistry.parameters.json?sp=r&st=2020-07-07T08:42:57Z&se=2020-07-07T16:42:57Z&spr=https&sv=2019-10-10&sr=b&sig=a%2FZdBvFWyeUm8j8jm%2BSIm3QV3e4jx5%2FvHoZv4yiUqzc%3D'
-    deploymentMode: 'Incremental'
-    deploymentOutputs: acrOutput
+stages:
+    - stage: create
+        jobs:
+            - job: acr
+                steps:
+                - task: AzureResourceManagerTemplateDeployment@3
+                    inputs:
+                        deploymentScope: 'Resource Group'
+                        azureResourceManagerConnection: 'Visual Studio Professional Subscription(70f59e87-157b-4a3f-96e8-bae1144aa0b3)'
+                        subscriptionId: '70f59e87-157b-4a3f-96e8-bae1144aa0b3'
+                        action: 'Create Or Update Resource Group'
+                        resourceGroupName: 'myapp'
+                        location: 'Central US'
+                        templateLocation: 'URL of the file'
+                        csmFileLink: 'https://myapp66sa.blob.core.windows.net/armtemplates/ArmTemplates/containerRegistry/containerRegistry.json?sp=r&st=2020-07-07T07:54:31Z&se=2020-07-07T15:54:31Z&spr=https&sv=2019-10-10&sr=b&sig=L8JqTw0VHs3LF6IvoWD6yLp08RD0p6Qdv0SAzG8wQVQ%3D'
+                        csmParametersFileLink: 'https://myapp66sa.blob.core.windows.net/armtemplates/ArmTemplates/containerRegistry/containerRegistry.parameters.json?sp=r&st=2020-07-07T08:42:57Z&se=2020-07-07T16:42:57Z&spr=https&sv=2019-10-10&sr=b&sig=a%2FZdBvFWyeUm8j8jm%2BSIm3QV3e4jx5%2FvHoZv4yiUqzc%3D'
+                        deploymentMode: 'Incremental'
+                        deploymentOutputs: acrOutput
+            - job: aks
+                steps:
+                - task: AzureResourceManagerTemplateDeployment@3
+                    inputs:
+                        deploymentScope: 'Resource Group'
+                        azureResourceManagerConnection: 'Visual Studio Professional Subscription(70f59e87-157b-4a3f-96e8-bae1144aa0b3)'
+                        subscriptionId: '70f59e87-157b-4a3f-96e8-bae1144aa0b3'
+                        action: 'Create Or Update Resource Group'
+                        resourceGroupName: 'myapp'
+                        location: 'Central US'
+                        templateLocation: 'URL of the file'
+                        csmFileLink: 'https://myapp66sa.blob.core.windows.net/armtemplates/aksCluster.json?sp=r&st=2020-07-07T11:33:07Z&se=2020-07-07T19:33:07Z&spr=https&sv=2019-10-10&sr=b&sig=Xv2WkA%2BybEiZfd1CFGznIOCRhOvPBeddv4aWbO9scgE%3D'
+                        csmParametersFileLink: 'https://myapp66sa.blob.core.windows.net/armtemplates/aksCluster.parameters.json?sp=r&st=2020-07-07T11:33:43Z&se=2020-07-07T19:33:43Z&spr=https&sv=2019-10-10&sr=b&sig=WhzFYbAUkrhNlAQYtEaOGgGGEbYWXaT6xH2qCmipnaw%3D'
+                        deploymentMode: 'Incremental'
 
 
 
