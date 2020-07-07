@@ -1,0 +1,34 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+trigger:
+- master
+
+pool:
+  vmImage: 'windows-latest'
+
+steps:
+- script: echo Hello, world!
+  displayName: 'Run a one-line script'
+
+- script: |
+    echo Add other tasks to build, test, and deploy your project.
+    echo See https://aka.ms/yaml
+  displayName: 'Run a multi-line script'
+
+
+
+- task: AzureResourceManagerTemplateDeployment@3
+  inputs:
+    deploymentScope: 'Resource Group'
+    azureResourceManagerConnection: 'Visual Studio Professional Subscription (70f59e87-157b-4a3f-96e8-bae1144aa0b3)'
+    subscriptionId: '70f59e87-157b-4a3f-96e8-bae1144aa0b3'
+    action: 'Create Or Update Resource Group'
+    resourceGroupName: 'myAppDocker'
+    location: 'Central US'
+    templateLocation: 'URL of the file'
+    csmFileLink: 'https://myapp66sa.blob.core.windows.net/armtemplates/ArmTemplates/storageAccount.json?sp=rw&st=2020-07-06T14:21:24Z&se=2020-09-06T22:21:24Z&spr=https&sv=2019-10-10&sr=b&sig=BgejKdjOVrwzBkvrw9BHtoD2o0mH5IN%2FCfl%2BozKghzs%3D'
+    deploymentMode: 'Incremental'
+    overrideParameters: '-storageAccountName mydokerappstorage66'
