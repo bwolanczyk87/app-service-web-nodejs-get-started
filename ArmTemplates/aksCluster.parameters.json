@@ -1,0 +1,21 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "dnsPrefix": {
+            "value": "myappdnspref" 
+        },
+        "linuxAdminUsername": {
+            "value": "sysadmin" 
+        },
+        "sshRSAPublicKey": {
+            "value": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDYsOjfm8mFCN1xf2eY4nFnYfMlwSNpEY7bVqFGMgbHLO8LsLAB5ovlA+KzrjgpdEJGOTXO/Mrjzd+BlPVIVsFghp1qja/8hlZTezy19I15AvxipgWAVrw5Ys8+ZTlHN25Nw7sTwCspnTVzItCbyR6nz0JZKzZevAb/NVO4fVpB7MlXDpqgKhDzymY4MUio0rWci+h1uX7WzmV89b/oE+gp59ukIatdExmEwZ9eA0vfvF8K7yIHH4WZ6HycusUV9JXvRjP0GMMHaneHAntct5lyaxl7A0cjOgXRzsGEjalpUPXdU/WpRY3uSNxeemLeL7FNkvEJiRvXlAuDgSlKkItJ" 
+        },
+        "servicePrincipalClientId": {
+            "value": "1da1b54f-ad95-4c8a-9759-991ae0c7f109" 
+        },
+        "servicePrincipalClientSecret": {
+            "value": "GQG37t7iC1AQBf~ryd~_0B0_0.-cVswp4M" 
+        }
+    }
+}
