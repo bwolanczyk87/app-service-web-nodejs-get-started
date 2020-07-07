@@ -1,0 +1,30 @@
+  # Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+trigger:
+  - master
+  
+pool:
+  vmImage: 'ubuntu-latest'
+
+steps:
+- task: AzureResourceManagerTemplateDeployment@3
+  inputs:
+    deploymentScope: 'Resource Group'
+    azureResourceManagerConnection: 'Visual Studio Professional Subscription (70f59e87-157b-4a3f-96e8-bae1144aa0b3)'
+    subscriptionId: '70f59e87-157b-4a3f-96e8-bae1144aa0b3'
+    action: 'Create Or Update Resource Group'
+    resourceGroupName: 'myapp'
+    location: 'Central US'
+    templateLocation: 'URL of the file'
+    csmFileLink: 'https://myapp66sa.blob.core.windows.net/armtemplates/ArmTemplates/containerRegistry/containerRegistry.json?sp=r&st=2020-07-07T07:54:31Z&se=2020-07-07T15:54:31Z&spr=https&sv=2019-10-10&sr=b&sig=L8JqTw0VHs3LF6IvoWD6yLp08RD0p6Qdv0SAzG8wQVQ%3D'
+    csmParametersFileLink: 'https://myapp66sa.blob.core.windows.net/armtemplates/ArmTemplates%2FcontainerRegistry%2FcontainerRegistry.parameters.json'
+    deploymentMode: 'Incremental'
+    deploymentOutputs: acrOutput
+
+
+
+  
+  
