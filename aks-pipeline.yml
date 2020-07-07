@@ -10,24 +10,12 @@ pool:
   vmImage: 'ubuntu-latest'
 
 steps:
-- task: AzureResourceManagerTemplateDeployment@3
-  inputs:
-    deploymentScope: 'Resource Group'
-    azureResourceManagerConnection: 'Visual Studio Professional Subscription(70f59e87-157b-4a3f-96e8-bae1144aa0b3)'
-    subscriptionId: '70f59e87-157b-4a3f-96e8-bae1144aa0b3'
-    action: 'Create Or Update Resource Group'
-    resourceGroupName: 'myapp'
-    location: 'Central US'
-    templateLocation: 'URL of the file'
-    csmFileLink: 'https://myapp66sa.blob.core.windows.net/armtemplates/ArmTemplates/containerRegistry/containerRegistry.json?sp=r&st=2020-07-07T07:54:31Z&se=2020-07-07T15:54:31Z&spr=https&sv=2019-10-10&sr=b&sig=L8JqTw0VHs3LF6IvoWD6yLp08RD0p6Qdv0SAzG8wQVQ%3D'
-    csmParametersFileLink: 'https://myapp66sa.blob.core.windows.net/armtemplates/ArmTemplates/containerRegistry/containerRegistry.parameters.json?sp=r&st=2020-07-07T08:42:57Z&se=2020-07-07T16:42:57Z&spr=https&sv=2019-10-10&sr=b&sig=a%2FZdBvFWyeUm8j8jm%2BSIm3QV3e4jx5%2FvHoZv4yiUqzc%3D'
-    deploymentMode: 'Incremental'
-    deploymentOutputs: acrOutput
+
 
 - task: AzureCLI@2
   inputs:
     azureSubscription: 'Visual Studio Professional Subscription(70f59e87-157b-4a3f-96e8-bae1144aa0b3)'
-    scriptType: 'ps'
+    scriptType: 'bash'
     scriptLocation: 'inlineScript'
     inlineScript: |
       $sp = az ad sp create-for-rbac --skip-assignment
@@ -35,6 +23,7 @@ steps:
 
 - script: echo $servicePrincipal
 - script: echo $servicePrincipal.appId
+
 
 
 
