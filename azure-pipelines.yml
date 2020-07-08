@@ -53,7 +53,7 @@ stages:
     displayName: Deploy
     pool:
       vmImage: $(vmImageName)
-    environment: 'bwolanczyk87appservicewebnodejsgetstarted-1432.myapp-namespace'
+    environment: 'myapp.myappnamespace'
     strategy:
       runOnce:
         deploy:
