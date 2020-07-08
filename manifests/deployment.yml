@@ -13,4 +13,4 @@ spec:
         - name: bwolanczykappservicewebnodejsgetstarted 
           image: yudmivr5ulpmcacr.azurecr.io/bwolanczykappservicewebnodejsgetstarted
           ports:
-          - containerPort: 3000
+          - containerPort: 5000
