@@ -1,16 +1,16 @@
 apiVersion : apps/v1beta1
 kind: Deployment
 metadata:
-  name: bwolanczykappservicewebnodejsgetstarted 
+  name: bwolanczykmyapp 
 spec:
   replicas: 1
   template:
     metadata:
       labels:
-        app: bwolanczykappservicewebnodejsgetstarted 
+        app: bwolanczykmyapp  
     spec:
       containers:
-        - name: bwolanczykappservicewebnodejsgetstarted 
-          image: yudmivr5ulpmcacr.azurecr.io/bwolanczykappservicewebnodejsgetstarted
+        - name: bwolanczykmyapp  
+          image: yudmivr5ulpmcacr.azurecr.io/bwimage 
           ports:
           - containerPort: 5000
