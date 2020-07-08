@@ -53,7 +53,7 @@ stages:
     displayName: Deploy
     pool:
       vmImage: $(vmImageName)
-    environment: 'myapp.myappnamespace'
+    environment: 'kube.kubenamespace'
     strategy:
       runOnce:
         deploy:
