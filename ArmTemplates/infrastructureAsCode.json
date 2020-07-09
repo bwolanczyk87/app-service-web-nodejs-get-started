@@ -1,0 +1,109 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "keyVaultName": {
+            "type": "string",
+            "defaultValue": "[concat(uniqueString(resourceGroup().id), 'kv')]",
+            "metadata": {
+                "description": "The name of the key vault to create."
+            }
+        },
+        "tenantID": {
+            "type": "string",
+            "defaultValue": "866b717c-31b3-49d8-92b3-9645d41ca9ef",
+            "metadata": {
+                "description": "Tenant ID."
+            }
+        },
+        "objectID": {
+            "type": "string",
+            "defaultValue": "39f0128b-10cc-445d-8949-f3f43cf5054f",
+            "metadata": {
+                "description": "User ID from Azure Active Directory"
+            }
+        },
+        "location": {
+            "type": "string",
+            "defaultValue": "[resourceGroup().location]",
+            "metadata": {
+                "description": "The location in which all resources should be deployed."
+            }
+        }
+    },
+    "variables": { },
+    "resources": [
+        {
+            "name": "keyVault",
+            "type": "Microsoft.Resources/deployments",
+            "apiVersion": "2019-10-01",
+            "properties": {
+                "expressionEvaluationOptions": {
+                    "scope": "inner"
+                },
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "https://raw.githubusercontent.com/Azure/azure-quickstart-templates/master/101-key-vault-create/azuredeploy.json",
+                    "contentVersion":"1.0.0.0"
+                },
+                "parameters": {
+                    "keyVaultName": {
+                            "value:": "[parameters('keyVaultName')]"
+                    },
+                    "tenantID": {
+                        "value": "[parameters('tenantID')]"
+                    },
+                    "objectID": {
+                        "value": "[parameters('objectID')]"
+                    },
+                    "keysPermissions": {
+                        "value:": [
+                            "all"
+                        ]
+                    },
+                    "secretsPermissions": {
+                        "value:": [
+                            "all"
+                        ]
+                    },
+                    "secretName": {
+                        "value": "Test secter name"
+                    },
+                    "secretValue": {
+                        "value": "Test secret value"
+                    }
+                }
+            }
+        },
+        {
+            "name": "storageAccountWithSasToken",
+            "type": "Microsoft.Resources/deployments",
+            "apiVersion": "2019-10-01",
+            "properties": {
+                "expressionEvaluationOptions": {
+                    "scope": "outer"
+                },
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "https://raw.githubusercontent.com/sam-cogan/Demos/master/SaSToken/SaSToken.json",
+                    "contentVersion":"1.0.0.0"
+                },
+                "parameters": {
+                    "keyVaultName": {
+                            "value:": "[parameters('keyVaultName')]"
+                    },
+                    "tenantID": {
+                        "value": "[parameters('tenantID')]"
+                    },
+                    "keyVaultAccessObjectID": {
+                        "value": "[parameters('objectID')]"
+                    },
+                    "StorageAccountName": {
+                        "value": "[concat(uniqueString(resourceGroup().id), 'sta')]"
+                    }
+                }
+            }
+        }
+    ],
+    "outputs": {}
+}
