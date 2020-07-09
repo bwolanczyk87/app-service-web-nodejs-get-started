@@ -72,6 +72,15 @@
                     },
                     "secretValue": {
                         "value": "Test secret value"
+                    },
+                    "enabledForDeployment": {
+                        "value": true
+                    },
+                    "enabledForDiskEncryption": {
+                        "value": true
+                    },
+                    "enabledForTemplateDeployment": {
+                        "value": true
                     }
                 }
             }
