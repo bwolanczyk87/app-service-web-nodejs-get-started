@@ -43,15 +43,9 @@
             "apiVersion": "2019-10-01",
             "properties": {
                 "variables": {
-                    "keyVaultName": {
-                            "value:": "[parameters('keyVaultName')]"
-                    },
-                    "tenantID": {
-                        "value": "[parameters('tenantID')]"
-                    },
-                    "objectID": {
-                        "value": "[parameters('objectID')]"
-                    }
+                    "keyVaultName": "[parameters('keyVaultName')]",
+                    "tenantID": "[parameters('tenantID')]",
+                    "objectID": "[parameters('objectID')]"
                 },
                 "mode": "Incremental",
                 "templateLink": {
