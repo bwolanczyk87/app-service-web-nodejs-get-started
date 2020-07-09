@@ -1,8 +1,7 @@
-FROM node:10.13-alpine
-ENV NODE_ENV production
+FROM node:12
 WORKDIR /usr/src/app
-COPY ["package.json", "./"]
-RUN npm install --production --silent && mv node_modules ../
+COPY package*.json ./
+RUN npm install 
 COPY . .
-EXPOSE 5000
-CMD node app.js
+EXPOSE 8080
+CMD [ "node", "app.js" ]
