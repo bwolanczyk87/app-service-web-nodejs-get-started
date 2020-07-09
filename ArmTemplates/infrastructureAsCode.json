@@ -14,7 +14,7 @@
             "defaultValue": "866b717c-31b3-49d8-92b3-9645d41ca9ef",
             "metadata": {
                 "description": "Tenant ID."
-            }
+            } 
         },
         "objectID": {
             "type": "string",
