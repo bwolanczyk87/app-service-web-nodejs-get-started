@@ -31,22 +31,18 @@
             }
         }
     },
-    "variables": { },
+    "variables": { 
+        "keyVaultName": "[parameters('keyVaultName')]",
+        "tenantID": "[parameters('tenantID')]",
+        "objectID": "[parameters('objectID')]"
+    },
     "resources": [
         {
             "name": "keyVault",
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2019-10-01",
             "properties": {
-                "expressionEvaluationOptions": {
-                    "scope": "inner"
-                },
-                "mode": "Incremental",
-                "templateLink": {
-                    "uri": "https://raw.githubusercontent.com/Azure/azure-quickstart-templates/master/101-key-vault-create/azuredeploy.json",
-                    "contentVersion":"1.0.0.0"
-                },
-                "parameters": {
+                "variables": {
                     "keyVaultName": {
                             "value:": "[parameters('keyVaultName')]"
                     },
@@ -55,6 +51,22 @@
                     },
                     "objectID": {
                         "value": "[parameters('objectID')]"
+                    }
+                },
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "https://raw.githubusercontent.com/Azure/azure-quickstart-templates/master/101-key-vault-create/azuredeploy.json",
+                    "contentVersion":"1.0.0.0"
+                },
+                "parameters": {
+                    "keyVaultName": {
+                        "value:": "[variables('keyVaultName')]"
+                    },
+                    "tenantID": {
+                        "value": "[variables('tenantID')]"
+                    },
+                    "objectID": {
+                        "value": "[variables('objectID')]"
                     },
                     "keysPermissions": {
                         "value:": [
@@ -90,13 +102,13 @@
                 },
                 "parameters": {
                     "keyVaultName": {
-                            "value:": "[parameters('keyVaultName')]"
+                            "value:": "[variables('keyVaultName')]"
                     },
                     "tenantID": {
-                        "value": "[parameters('tenantID')]"
+                        "value": "[variables('tenantID')]"
                     },
                     "keyVaultAccessObjectID": {
-                        "value": "[parameters('objectID')]"
+                        "value": "[variables('objectID')]"
                     },
                     "StorageAccountName": {
                         "value": "[concat(uniqueString(resourceGroup().id), 'sta')]"
