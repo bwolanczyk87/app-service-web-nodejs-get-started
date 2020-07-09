@@ -42,26 +42,15 @@
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2019-10-01",
             "properties": {
-                "variables": {
-                    "keyVaultName": "[parameters('keyVaultName')]",
-                    "tenantID": "[parameters('tenantID')]",
-                    "objectID": "[parameters('objectID')]"
-                },
                 "mode": "Incremental",
                 "templateLink": {
                     "uri": "https://raw.githubusercontent.com/Azure/azure-quickstart-templates/master/101-key-vault-create/azuredeploy.json",
                     "contentVersion":"1.0.0.0"
                 },
                 "parameters": {
-                    "keyVaultName": {
-                        "value:": "[variables('keyVaultName')]"
-                    },
-                    "tenantID": {
-                        "value": "[variables('tenantID')]"
-                    },
-                    "objectID": {
-                        "value": "[variables('objectID')]"
-                    },
+                    "keyVaultName": "[variables('keyVaultName')]",
+                    "tenantID": "[variables('tenantID')]",
+                    "objectID": "[variables('objectID')]",
                     "keysPermissions": {
                         "value:": [
                             "all"
