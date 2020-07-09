@@ -49,7 +49,7 @@
                 },
                 "parameters": {
                     "keyVaultName": {
-                        "value:": "[variables('keyVaultName')]"
+                        "value": "[variables('keyVaultName')]"
                     },
                     "tenantID": {
                         "value": "[variables('tenantID')]"
@@ -58,12 +58,12 @@
                         "value": "[variables('objectID')]"
                     },
                     "keysPermissions": {
-                        "value:": [
+                        "value": [
                             "all"
                         ]
                     },
                     "secretsPermissions": {
-                        "value:": [
+                        "value": [
                             "all"
                         ]
                     },
@@ -91,7 +91,7 @@
                 },
                 "parameters": {
                     "keyVaultName": {
-                            "value:": "[variables('keyVaultName')]"
+                        "value": "[variables('keyVaultName')]"
                     },
                     "tenantID": {
                         "value": "[variables('tenantID')]"
