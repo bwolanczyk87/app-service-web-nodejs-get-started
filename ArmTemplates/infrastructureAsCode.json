@@ -48,9 +48,15 @@
                     "contentVersion":"1.0.0.0"
                 },
                 "parameters": {
-                    "keyVaultName": "[variables('keyVaultName')]",
-                    "tenantID": "[variables('tenantID')]",
-                    "objectID": "[variables('objectID')]",
+                    "keyVaultName": {
+                        "value:": "[variables('keyVaultName')]"
+                    },
+                    "tenantID": {
+                        "value": "[variables('tenantID')]"
+                    },
+                    "objectID": {
+                        "value": "[variables('objectID')]"
+                    },
                     "keysPermissions": {
                         "value:": [
                             "all"
