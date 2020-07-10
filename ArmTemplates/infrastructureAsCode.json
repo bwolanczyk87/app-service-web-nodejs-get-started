@@ -4,7 +4,7 @@
     "parameters": {
         "keyVaultName": {
             "type": "string",
-            "defaultValue": "[concat(uniqueString(resourceGroup().name), 'kv')]",
+            "defaultValue": "[concat(uniqueString(resourceGroup().name), '-kv')]",
             "metadata": {
                 "description": "The name of the key vault to create."
             }
