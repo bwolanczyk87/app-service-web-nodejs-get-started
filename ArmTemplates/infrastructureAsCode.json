@@ -9,75 +9,27 @@
                 "description": "The name of the key vault to create."
             }
         },
+        "storageAccountName": {
+            "type": "string",
+            "defaultValue": "[concat(uniqueString(resourceGroup().id), 'sta')]",
+            "metadata": {
+                "description": "The name of the storage account to create."
+            }
+        },
         "tenantID": {
             "type": "string",
-            "defaultValue": "866b717c-31b3-49d8-92b3-9645d41ca9ef",
             "metadata": {
                 "description": "Tenant ID."
             }
         },
         "objectID": {
             "type": "string",
-            "defaultValue": "39f0128b-10cc-445d-8949-f3f43cf5054f",
             "metadata": {
                 "description": "User ID from Azure Active Directory"
             }
         }
     },
-    "variables": { 
-        "keyVaultName": "[parameters('keyVaultName')]",
-        "tenantID": "[parameters('tenantID')]",
-        "objectID": "[parameters('objectID')]"
-    },
     "resources": [
-        {
-            "name": "keyVault",
-            "type": "Microsoft.Resources/deployments",
-            "apiVersion": "2019-10-01",
-            "properties": {
-                "mode": "Incremental",
-                "templateLink": {
-                    "uri": "https://raw.githubusercontent.com/Azure/azure-quickstart-templates/master/101-key-vault-create/azuredeploy.json",
-                    "contentVersion":"1.0.0.0"
-                },
-                "parameters": {
-                    "keyVaultName": {
-                        "value": "[variables('keyVaultName')]"
-                    },
-                    "tenantID": {
-                        "value": "[variables('tenantID')]"
-                    },
-                    "objectID": {
-                        "value": "[variables('objectID')]"
-                    },
-                    "keysPermissions": {
-                        "value": [
-                            "all"
-                        ]
-                    },
-                    "secretsPermissions": {
-                        "value": [
-                            "all"
-                        ]
-                    },
-                    "secretName": {
-                        "value": "Test secter name"
-                    },
-                    "secretValue": {
-                        "value": "Test secret value"
-                    },
-                    "enabledForDeployment": {
-                        "value": true
-                    },
-                    "enabledForDiskEncryption": {
-                        "value": true
-                    },
-                    "enabledForTemplateDeployment": {
-                        "value": true
-                    }
-                }
-            }
-        },
         {
             "name": "storageAccountWithSasToken",
             "type": "Microsoft.Resources/deployments",
@@ -93,16 +45,16 @@
                 },
                 "parameters": {
                     "keyVaultName": {
-                        "value": "[variables('keyVaultName')]"
+                        "value": "[parameters('keyVaultName')]"
                     },
                     "tenantID": {
-                        "value": "[variables('tenantID')]"
+                        "value": "[parameters('tenantID')]"
                     },
                     "keyVaultAccessObjectID": {
-                        "value": "[variables('objectID')]"
+                        "value": "[parameters('objectID')]"
                     },
                     "StorageAccountName": {
-                        "value": "[concat(uniqueString(resourceGroup().id), 'sta')]"
+                        "value": "[parameters('storageAccountName')]"
                     },
                     "accountSasProperties": {
                         "value": {
