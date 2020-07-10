@@ -4,7 +4,7 @@
     "parameters": {
         "keyVaultName": {
             "type": "string",
-            "defaultValue": "[concat(uniqueString(resourceGroup().id), 'kv')]",
+            "defaultValue": "[concat(uniqueString(resourceGroup().name), 'kv')]",
             "metadata": {
                 "description": "The name of the key vault to create."
             }
@@ -21,13 +21,6 @@
             "defaultValue": "39f0128b-10cc-445d-8949-f3f43cf5054f",
             "metadata": {
                 "description": "User ID from Azure Active Directory"
-            }
-        },
-        "location": {
-            "type": "string",
-            "defaultValue": "[resourceGroup().location]",
-            "metadata": {
-                "description": "The location in which all resources should be deployed."
             }
         }
     },
@@ -110,6 +103,14 @@
                     },
                     "StorageAccountName": {
                         "value": "[concat(uniqueString(resourceGroup().id), 'sta')]"
+                    },
+                    "accountSasProperties": {
+                        "value": {
+                            "signedServices": "b",
+                            "signedPermission": "rw",
+                            "signedExpiry": "2021-03-01T00:00:01Z",
+                            "signedResourceTypes": "o"
+                        }
                     }
                 }
             }
