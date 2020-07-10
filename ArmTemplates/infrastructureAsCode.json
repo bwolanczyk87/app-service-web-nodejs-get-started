@@ -78,9 +78,15 @@
             "apiVersion": "2018-03-01-preview",
             "name": "[concat(parameters('storageAccountName'), '/default/', parameters('containerName'))]",
             "dependsOn": [
-                "[parameters('storageAccountName')]"
+                "[parameters('storageAccountName')]",
+                "storageAccountWithSasTokenAndKeyValtWithSasSecret"
             ]
         }
     ],
-    "outputs": {}
+    "outputs": {
+        "armTemplateContainerUri": {
+            "type": "string",
+            "value": "[uri(reference(resourceId('Microsoft.Storage/storageAccounts/blobServices/containers', resourceGroup().name, parameters('storageAccountName'), parameters('containerName')), '2018-02-01').defaultHostName, reference(resourceId('Microsoft.KeyVault/vaults/secrets', parameters('keyVaultName'), 'StorageSaSToken')).secretValue)]"
+        }
+    }
 }
