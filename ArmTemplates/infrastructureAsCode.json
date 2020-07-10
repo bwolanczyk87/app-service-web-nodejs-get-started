@@ -4,14 +4,14 @@
     "parameters": {
         "keyVaultName": {
             "type": "string",
-            "defaultValue": "[concat(uniqueString(resourceGroup().id), 'kv')]",
+            "defaultValue": "[concat('kv', uniqueString(resourceGroup().id))]",
             "metadata": {
                 "description": "The name of the key vault to create."
             }
         },
         "storageAccountName": {
             "type": "string",
-            "defaultValue": "[concat(uniqueString(resourceGroup().id), 'sta')]",
+            "defaultValue": "[concat('sta', uniqueString(resourceGroup().id))]",
             "metadata": {
                 "description": "The name of the storage account to create."
             }
