@@ -7,6 +7,9 @@
         },
         "objectID": {
             "value": "39f0128b-10cc-445d-8949-f3f43cf5054f"
+        },
+        "containerName": {
+            "value": "armTemplates"
         }
     }
 }

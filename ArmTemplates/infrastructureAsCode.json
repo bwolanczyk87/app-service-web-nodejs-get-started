@@ -16,6 +16,12 @@
                 "description": "The name of the storage account to create."
             }
         },
+        "containerName": {
+            "type": "string",
+            "metadata": {
+                "description": "The name of the storage account container to create."
+            }
+        },
         "tenantID": {
             "type": "string",
             "metadata": {
@@ -31,7 +37,7 @@
     },
     "resources": [
         {
-            "name": "storageAccountWithSasToken",
+            "name": "storageAccountWithSasTokenAndKeyValtWithSasSecret",
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2019-10-01",
             "properties": {
@@ -66,6 +72,14 @@
                     }
                 }
             }
+        },
+        {
+            "type": "Microsoft.Storage/storageAccounts/blobServices/containers",
+            "apiVersion": "2018-03-01-preview",
+            "name": "[concat(parameters('storageAccountName'), '/default/', parameters('containerName'))]",
+            "dependsOn": [
+                "[parameters('storageAccountName')]"
+            ]
         }
     ],
     "outputs": {}
